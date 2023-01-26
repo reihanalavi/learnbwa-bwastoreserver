@@ -1,0 +1,21 @@
+var express = require('express');
+var router = express.Router();
+const { landingPage, detailPage, category, checkout, history, historyDetail, dashboard, profile, editProfile } = require('./controller')
+const { isLoginPlayer } = require('../middleware/auth')
+const multer = require('multer')
+const os = require('os')
+
+/* GET home page. */
+router.get('/landingpage', landingPage);
+router.get('/detail/:id', detailPage);
+router.get('/category', category);
+router.post('/checkout', isLoginPlayer, checkout);
+router.get('/history', isLoginPlayer, history);
+router.get('/dashboard', isLoginPlayer, dashboard);
+router.get('/profile', isLoginPlayer, profile);
+router.put('/profile', isLoginPlayer, multer({
+    dest: os.tmpdir()
+}).single('avatar'), editProfile);
+router.get('/history/:id/detail', isLoginPlayer, historyDetail);
+
+module.exports = router;

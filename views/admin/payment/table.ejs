@@ -1,0 +1,58 @@
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+        <th>Nomor</th>
+        <th>Tipe Pembayaran</th>
+        <th>Bank</th>
+        <th>Status</th>
+        <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i = 0; i < payment.length; i++) { %>
+           <tr>
+            <td><%=i + 1 %></td>
+            <td><%=payment[i].type %></td>
+            <td>
+                <% payment[i].banks.forEach(bankItem => { %>
+                    <span class="badge badge-warning">
+                        <%= bankItem.name %> | <%= bankItem.bankName %> | <%= bankItem.noRekening %>
+                    </span>
+                <% }) %>
+            </td>
+            <td>
+                <% if(payment[i].status === 'Y') { %>
+                    <span class="badge badge-success">
+                        Aktif
+                    </span>
+                <% } else { %>
+                    <span class="badge badge-danger">
+                        Tidak  Aktif
+                    </span>
+                <% } %>
+            </td>
+            <td>
+                <form action="/payment/status/<%= payment[i]._id %>?_method=PUT" method="post" style="display: inline-block;">
+                    <button class="btn btn-sm btn-primary">
+                        <i class="fas fa-folder">
+                            <% if(payment[i].status === 'Y') { %>
+                                Matikan
+                            <% } else { %>
+                                Hidupkan
+                            <% } %>
+                        </i>
+                    </button>
+                </form>
+                <a href="/payment/edit/<%= payment[i]._id %>" class="btn btn-warning">
+                    <i class="nav-icon fas fa-edit"></i> Ubah</a>
+                <form action="/payment/delete/<%= payment[i]._id %>?_method=DELETE" style="display: inline-block;" method="post">
+                    <button href="" class="btn btn-danger">
+                        <i class="nav-icon fas fa-trash"></i> Hapus</button>
+                </form>
+            </td>
+           </tr> 
+        <% } %>
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
