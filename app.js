@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const path = require('path');
 const cors = require('cors')
+const serverless = require('serverless-http')
 
 const categoryRouter = require('./app/category/router');
 const nominalRouter = require('./app/nominal/router');
@@ -75,3 +76,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+module.exports.handler = serverless(app);
